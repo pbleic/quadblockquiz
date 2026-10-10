@@ -1,0 +1,74 @@
+[
+  {
+    "id": "q-sqli-1",
+    "topic": "Secure Coding",
+    "prompt": "Which defense most directly prevents untrusted input from changing a SQL command's structure?",
+    "choices": ["Parameterized queries", "Longer table names", "Client-side validation only", "Base64 encoding"],
+    "answer_index": 0,
+    "explanation": "Parameterized queries keep data separate from SQL instructions.",
+    "vulnerability_id": "sql-injection"
+  },
+  {
+    "id": "q-xss-1",
+    "topic": "Secure Coding",
+    "prompt": "What is the safest default when placing user-controlled text into an HTML page?",
+    "choices": ["Removing spaces", "Using a shorter URL", "Context-aware output encoding", "Disabling logs"],
+    "answer_index": 2,
+    "explanation": "Context-aware encoding prevents text from becoming executable markup or script.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-deps-1",
+    "topic": "Dependencies",
+    "prompt": "A transitive dependency has a published critical fix. What is the best first response?",
+    "choices": ["Delete the lockfile in production", "Assess exposure and update through a tested lockfile change", "Ignore transitive packages", "Rename the package"],
+    "answer_index": 1,
+    "explanation": "A controlled, tested update reduces exposure while preserving reproducible builds.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-secret-1",
+    "topic": "Secrets",
+    "prompt": "A live API token was committed to a public repository. What must happen first?",
+    "choices": ["Only delete the latest commit", "Make the variable name obscure", "Add a comment warning readers", "Revoke and rotate the token"],
+    "answer_index": 3,
+    "explanation": "History may already be copied, so revoke and rotate before cleaning history.",
+    "vulnerability_id": "exposed-secret"
+  },
+  {
+    "id": "q-license-1",
+    "topic": "Licensing",
+    "prompt": "Before distributing a product with a new open-source library, what should the team verify?",
+    "choices": ["The package name is short", "License obligations and compatibility", "The maintainer uses the same editor", "The repository has no branches"],
+    "answer_index": 1,
+    "explanation": "Reviewing license terms early prevents incompatible obligations and missed notices.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-sbom-1",
+    "topic": "Supply Chain",
+    "prompt": "What does an SBOM primarily provide?",
+    "choices": ["A penetration-test guarantee", "A password vault", "An inventory of software components", "A source-code license"],
+    "answer_index": 2,
+    "explanation": "A software bill of materials records components so teams can assess exposure and obligations.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-build-1",
+    "topic": "Supply Chain",
+    "prompt": "Why pin build dependencies to verified versions or digests?",
+    "choices": ["To increase screen resolution", "To make builds reproducible and limit surprise changes", "To avoid writing tests", "To hide package names"],
+    "answer_index": 1,
+    "explanation": "Pinned, verified inputs make unexpected upstream substitutions easier to prevent and detect.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-review-1",
+    "topic": "Governance",
+    "prompt": "Which control best reduces the risk of one compromised maintainer publishing unchecked code?",
+    "choices": ["A brighter project logo", "Fewer release notes", "Required independent review and protected releases", "Shared administrator passwords"],
+    "answer_index": 2,
+    "explanation": "Independent review and protected release paths reduce single-person compromise risk.",
+    "vulnerability_id": "exposed-secret"
+  }
+]

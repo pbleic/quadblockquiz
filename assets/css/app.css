@@ -1,0 +1,48 @@
+@import "./phoenix.css";
+
+:root { --ink:#eaf3f2; --muted:#91a7a5; --panel:#101c20; --line:#294047; --teal:#36e0c0; --amber:#ffba43; --red:#ff5e62; --bg:#071014; }
+* { box-sizing:border-box; }
+body { margin:0; min-height:100vh; color:var(--ink); background:radial-gradient(circle at 20% 0%,#15353b 0,transparent 36%),var(--bg); font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace; }
+button { font:inherit; }
+#game-shell { width:min(1120px,96vw); margin:0 auto; padding:28px 0 40px; }
+.hero { display:flex; align-items:flex-end; justify-content:space-between; border-bottom:1px solid var(--line); padding:0 0 18px; margin-bottom:22px; background:transparent; }
+.eyebrow { color:var(--teal); font-size:11px; letter-spacing:.22em; margin:0 0 6px; font-weight:700; }
+h1 { font:900 clamp(30px,5vw,54px)/.95 Arial,sans-serif; letter-spacing:-.055em; margin:0; }
+h1 span { color:var(--teal); }
+.tagline { color:var(--muted); margin:10px 0 0; font-size:12px; }
+.status-pill { padding:9px 13px; border:1px solid var(--line); border-radius:999px; background:#0b171a; color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+.status-pill i,.section-title i { display:inline-block; width:7px; height:7px; margin-right:8px; background:var(--teal); border-radius:50%; box-shadow:0 0 12px var(--teal); }
+.game-layout { display:grid; grid-template-columns:minmax(350px,620px) minmax(290px,1fr); gap:22px; align-items:start; }
+.board-panel,.side-panel>section { border:1px solid var(--line); background:rgba(12,25,29,.94); box-shadow:0 18px 50px #0007; }
+.hud { display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--line); }
+.hud>div { padding:13px 16px; border-right:1px solid var(--line); }
+.hud>div:last-child { border:0; }
+.hud small { display:block; color:var(--muted); letter-spacing:.14em; font-size:9px; margin-bottom:3px; }
+.hud strong { color:var(--teal); font-size:19px; }
+.board-wrap { position:relative; padding:18px; background:linear-gradient(135deg,#0d191d,#081216); }
+.board { width:min(100%,420px); aspect-ratio:1/2; margin:auto; display:grid; grid-template-columns:repeat(10,1fr); grid-template-rows:repeat(20,1fr); gap:2px; padding:4px; background:#050b0e; border:1px solid #365159; }
+.cell { background:#0d181c; border:1px solid #13262b; }
+.cell.filled { border:1px solid #ffffff42; box-shadow:inset 0 0 8px #fff3,0 0 7px currentColor; }
+.cell.bar { background:#29c9e3; color:#29c9e3; }.cell.box{background:#ffc845;color:#ffc845}.cell.tee{background:#bb6cff;color:#bb6cff}.cell.boot{background:#ff7759;color:#ff7759}.cell.zig{background:#48db79;color:#48db79}.cell.threat{background:#ff4155;color:#ff4155;}
+.topic-overlay { position:absolute; inset:18px; padding:24px; background:#081216f5; border:1px solid var(--teal); overflow:auto; display:flex; flex-direction:column; justify-content:center; }
+.topic-overlay h2 { margin:0 0 16px; font:800 26px Arial,sans-serif; }
+.question { font:600 16px/1.5 Arial,sans-serif; }
+.topic-list,.answer-list { display:grid; gap:9px; }
+.topic-list { grid-template-columns:1fr 1fr; }
+.topic-overlay button,.controls button { border:1px solid #3b5e65; color:var(--ink); background:#14292e; padding:11px; cursor:pointer; }
+.topic-overlay button:hover,.controls button:hover { border-color:var(--teal); background:#17373b; }
+.overlay-actions { display:flex; gap:10px; margin-top:20px; }.overlay-actions button{flex:1}.overlay-actions .danger{border-color:#7e3a42;color:#ff9295}.end-screen{text-align:center;align-items:center}.end-screen button{width:220px}
+.controls { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:14px; border-top:1px solid var(--line); }
+.controls .wide { grid-column:span 2; font-size:10px; letter-spacing:.08em; }.controls .pause{border-color:#3c8178;color:var(--teal)}
+.side-panel { display:grid; gap:14px; }
+.side-panel>section { padding:16px; box-shadow:none; }
+.section-title { display:flex; align-items:center; justify-content:space-between; color:var(--muted); font-size:10px; letter-spacing:.14em; padding-bottom:12px; border-bottom:1px solid var(--line); }
+.section-title small { font-size:8px; }
+.incident-card.active { border-color:#a94b51; background:linear-gradient(135deg,#28181b,#111b1f); }
+.incident-kind { color:var(--red); text-transform:uppercase; letter-spacing:.14em; font-size:10px; margin:14px 0 4px; }
+.incident-card h2 { font:800 20px Arial,sans-serif; margin:0 0 8px; }.incident-card>p{font-size:12px;line-height:1.45}.education{color:var(--muted)}
+.deadline { padding:9px; margin-top:12px; color:var(--amber); border:1px solid #795b2e; background:#2b2416; font-size:10px; text-align:center; letter-spacing:.08em; }.deadline.breached{color:#ff9da0;border-color:#7d353a;background:#2e171a}
+.all-clear { min-height:90px; display:flex; align-items:center; gap:14px; color:var(--muted); }.all-clear span{font-size:25px;color:var(--teal)}.all-clear p{font-size:11px}.all-clear strong{color:var(--ink)}
+.powerups { display:grid; gap:8px; }.powerups .section-title{margin-bottom:4px}.powerups button{display:grid;grid-template-columns:32px 1fr 24px;align-items:center;text-align:left;gap:8px;padding:9px;border:1px solid var(--line);background:#102126;color:var(--ink);cursor:pointer}.powerups button:disabled{opacity:.38;cursor:not-allowed}.powerups button small{display:block;color:var(--muted);font-size:9px;margin-top:2px}.powerups button b{text-align:center;color:var(--teal)}.power-icon{font-size:20px;color:var(--teal)}
+.message-log p{font-size:11px;line-height:1.55;color:#c3d2d0;margin:12px 0 0}.keyboard-help{display:flex;flex-wrap:wrap;gap:10px!important;color:var(--muted);font-size:9px}.keyboard-help kbd{border:1px solid #476169;background:#081215;padding:2px 5px;margin-right:3px;color:var(--ink)}
+@media(max-width:760px){#game-shell{padding-top:15px}.hero{align-items:flex-start}.status-pill{display:none}.game-layout{grid-template-columns:1fr}.side-panel{grid-row:1}.incident-card.quiet,.keyboard-help{display:none}.board{max-width:380px}.tagline{max-width:310px}.hud>div{padding:10px 8px}.hud strong{font-size:15px}.topic-overlay{padding:16px}.topic-list{grid-template-columns:1fr}}

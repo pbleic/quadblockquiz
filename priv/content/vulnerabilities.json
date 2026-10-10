@@ -1,0 +1,47 @@
+[
+  {
+    "id": "sql-injection",
+    "kind": "cyberattack",
+    "title": "SQL Injection Probe",
+    "summary": "Untrusted input is reaching a database query.",
+    "education": "Use parameterized queries and narrowly scoped database permissions.",
+    "penalty": "garbage_rows",
+    "deadline_seconds": 20
+  },
+  {
+    "id": "cross-site-scripting",
+    "kind": "cyberattack",
+    "title": "Cross-Site Scripting",
+    "summary": "Browser-bound content may execute attacker-controlled script.",
+    "education": "Encode output for its HTML context and apply a restrictive content security policy.",
+    "penalty": "rotate_lock",
+    "deadline_seconds": 20
+  },
+  {
+    "id": "outdated-dependency",
+    "kind": "cyberattack",
+    "title": "Outdated Dependency",
+    "summary": "A component in the build has a known exploitable flaw.",
+    "education": "Track an SBOM, assess reachability, and ship tested upgrades promptly.",
+    "penalty": "speed_up",
+    "deadline_seconds": 22
+  },
+  {
+    "id": "exposed-secret",
+    "kind": "cyberattack",
+    "title": "Exposed Build Secret",
+    "summary": "A credential escaped into a repository or build log.",
+    "education": "Revoke first, rotate dependent credentials, then remove the secret and investigate use.",
+    "penalty": "garbage_rows",
+    "deadline_seconds": 18
+  },
+  {
+    "id": "license-conflict",
+    "kind": "licensing_lawsuit",
+    "title": "License Compliance Claim",
+    "summary": "A shipped component's license obligations were not met.",
+    "education": "Inventory licenses and review distribution obligations before release.",
+    "penalty": "score_drain",
+    "deadline_seconds": 24
+  }
+]
