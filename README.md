@@ -12,7 +12,7 @@ Requirements:
 - Internet access the first time Hex dependencies are downloaded
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/pbleic/quadblockquiz.git
 cd quadblockquiz
 mix deps.get
 mix phx.server
