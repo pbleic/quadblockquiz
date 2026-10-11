@@ -39,4 +39,23 @@ defmodule QuadblockquizWeb.GameLiveTest do
     assert has_element?(view, ".topic-overlay .question")
     refute has_element?(view, ".topic-list")
   end
+
+  test "arrow keys select a quiz answer and enter submits it", %{conn: conn} do
+    {:ok, view, _html} = live(conn, "/")
+
+    view |> element("button[phx-value-name=topics]") |> render_click()
+    view |> element(".topic-list button", "Dependencies") |> render_click()
+
+    assert has_element?(view, ".answer-choice.selected:nth-child(1)")
+
+    render_keydown(view, "keydown", %{"key" => "ArrowDown"})
+    assert has_element?(view, ".answer-choice.selected:nth-child(2)")
+
+    render_keydown(view, "keydown", %{"key" => "ArrowUp"})
+    assert has_element?(view, ".answer-choice.selected:nth-child(1)")
+
+    render_keydown(view, "keydown", %{"key" => "Enter"})
+    refute has_element?(view, ".topic-overlay .question")
+    assert has_element?(view, ".status-pill", "Playing")
+  end
 end

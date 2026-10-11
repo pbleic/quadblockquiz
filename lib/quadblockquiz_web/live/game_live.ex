@@ -13,7 +13,8 @@ defmodule QuadblockquizWeb.GameLive do
     {:ok,
      socket
      |> assign(:page_title, "Quadblockquiz — Supply Chain Edition")
-     |> assign(:game, new_game())}
+     |> assign(:game, new_game())
+     |> assign(:selected_answer, 0)}
   end
 
   @impl true
@@ -21,19 +22,11 @@ defmodule QuadblockquizWeb.GameLive do
 
   @impl true
   def handle_event("keydown", %{"key" => key}, socket) do
-    game =
-      case key do
-        "ArrowLeft" -> Game.move(socket.assigns.game, :left)
-        "ArrowRight" -> Game.move(socket.assigns.game, :right)
-        "ArrowUp" -> Game.rotate(socket.assigns.game)
-        "ArrowDown" -> Game.soft_drop(socket.assigns.game)
-        "Enter" -> Game.hard_drop(socket.assigns.game)
-        " " -> Game.toggle_topics(socket.assigns.game)
-        "Space" -> Game.toggle_topics(socket.assigns.game)
-        _ -> socket.assigns.game
-      end
-
-    {:noreply, assign(socket, :game, game)}
+    if question_open?(socket.assigns.game) do
+      handle_question_key(key, socket)
+    else
+      handle_game_key(key, socket)
+    end
   end
 
   def handle_event("action", %{"name" => name}, socket) do
@@ -49,18 +42,51 @@ defmodule QuadblockquizWeb.GameLive do
         "restart" -> new_game()
       end
 
-    {:noreply, assign(socket, :game, game)}
+    {:noreply, assign(socket, game: game, selected_answer: 0)}
   end
 
-  def handle_event("topic", %{"name" => topic}, socket),
-    do: {:noreply, update(socket, :game, &Game.choose_topic(&1, topic))}
+  def handle_event("topic", %{"name" => topic}, socket) do
+    game = Game.choose_topic(socket.assigns.game, topic)
+    {:noreply, assign(socket, game: game, selected_answer: 0)}
+  end
 
-  def handle_event("answer", %{"index" => index}, socket),
-    do: {:noreply, update(socket, :game, &Game.answer(&1, String.to_integer(index)))}
+  def handle_event("answer", %{"index" => index}, socket) do
+    game = Game.answer(socket.assigns.game, String.to_integer(index))
+    {:noreply, assign(socket, game: game, selected_answer: 0)}
+  end
 
   def handle_event("powerup", %{"name" => name}, socket) do
     item = %{"row_blast" => :row_blast, "slow_clock" => :slow_clock, "hotfix" => :hotfix}[name]
     {:noreply, update(socket, :game, &Game.use_powerup(&1, item))}
+  end
+
+  defp handle_question_key("ArrowUp", socket),
+    do: {:noreply, move_answer_selection(socket, -1)}
+
+  defp handle_question_key("ArrowDown", socket),
+    do: {:noreply, move_answer_selection(socket, 1)}
+
+  defp handle_question_key("Enter", socket) do
+    game = Game.answer(socket.assigns.game, socket.assigns.selected_answer)
+    {:noreply, assign(socket, game: game, selected_answer: 0)}
+  end
+
+  defp handle_question_key(key, socket), do: handle_game_key(key, socket)
+
+  defp handle_game_key(key, socket) do
+    game =
+      case key do
+        "ArrowLeft" -> Game.move(socket.assigns.game, :left)
+        "ArrowRight" -> Game.move(socket.assigns.game, :right)
+        "ArrowUp" -> Game.rotate(socket.assigns.game)
+        "ArrowDown" -> Game.soft_drop(socket.assigns.game)
+        "Enter" -> Game.hard_drop(socket.assigns.game)
+        " " -> Game.toggle_topics(socket.assigns.game)
+        "Space" -> Game.toggle_topics(socket.assigns.game)
+        _ -> socket.assigns.game
+      end
+
+    {:noreply, assign(socket, :game, game)}
   end
 
   defp board_cells(game) do
@@ -76,6 +102,17 @@ defmodule QuadblockquizWeb.GameLive do
 
   defp cell_class(nil), do: "cell"
   defp cell_class(kind), do: "cell filled #{kind}"
+
+  defp question_open?(%Game{status: :topics, current_question: question}),
+    do: not is_nil(question)
+
+  defp question_open?(_game), do: false
+
+  defp move_answer_selection(socket, amount) do
+    count = length(socket.assigns.game.current_question["choices"])
+    selected = Integer.mod(socket.assigns.selected_answer + amount, count)
+    assign(socket, :selected_answer, selected)
+  end
 
   defp status_label(:running), do: "Playing"
   defp status_label(:topics), do: "Topic screen — gravity paused"
@@ -146,11 +183,17 @@ defmodule QuadblockquizWeb.GameLive do
                 <%= if @game.current_question do %>
                   <h2><%= @game.current_question["topic"] %></h2>
                   <p class="question"><%= @game.current_question["prompt"] %></p>
-                  <div class="answer-list">
+                  <div class="answer-list" aria-label="Answer choices">
                     <%= for {choice, index} <- Enum.with_index(@game.current_question["choices"]) do %>
-                      <button phx-click="answer" phx-value-index={index}><%= choice %></button>
+                      <button
+                        class={"answer-choice #{if index == @selected_answer, do: "selected"}"}
+                        aria-current={if index == @selected_answer, do: "true", else: "false"}
+                        phx-click="answer"
+                        phx-value-index={index}
+                      ><%= choice %></button>
                     <% end %>
                   </div>
+                  <p class="answer-key-help"><kbd>↑</kbd><kbd>↓</kbd> choose · <kbd>Enter</kbd> answer</p>
                 <% else %>
                   <h2>Choose a topic</h2>
                   <div class="topic-list">

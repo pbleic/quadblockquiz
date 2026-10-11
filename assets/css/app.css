@@ -31,6 +31,10 @@ h1 span { color:var(--teal); }
 .topic-list { grid-template-columns:1fr 1fr; }
 .topic-overlay button,.controls button { margin:0; border:1px solid #3b5e65; color:var(--ink); background:#14292e; padding:12px; cursor:pointer; font-size:16px; }
 .topic-overlay button:hover,.controls button:hover { border-color:var(--teal); background:#17373b; }
+.answer-list button { width:100%; height:auto; min-height:48px; white-space:normal; overflow-wrap:anywhere; line-height:1.35; letter-spacing:normal; text-align:left; text-transform:none; }
+.answer-list button.selected { border-color:var(--teal); background:#17373b; box-shadow:inset 4px 0 0 var(--teal); }
+.answer-key-help { margin:12px 0 0; color:var(--muted); font-size:12px; text-align:center; }
+.answer-key-help kbd { border:1px solid #476169; background:#081215; padding:3px 6px; color:var(--ink); font-size:12px; }
 .overlay-actions { display:flex; gap:10px; margin-top:20px; }.overlay-actions button{flex:1}.overlay-actions .danger{border-color:#7e3a42;color:#ff9295}.end-screen{text-align:center;align-items:center}.end-screen h2{font-size:clamp(42px,6vw,64px);margin-bottom:14px}.end-screen p{font-size:20px;margin:6px 0 24px}.end-screen button{width:240px;font-size:17px;font-weight:700}
 .controls { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:14px; border-top:1px solid var(--line); }
 .controls button:not(.wide) { font-size:24px; line-height:1; }.controls .wide { grid-column:span 2; font-size:13px; font-weight:700; letter-spacing:.06em; }.controls .pause{border-color:#3c8178;color:var(--teal)}

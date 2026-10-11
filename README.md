@@ -35,6 +35,7 @@ For development setup and verification:
 - `←` and `→` move the falling QuadBlock.
 - `↑` rotates it; `↓` soft-drops it; `Enter` hard-drops it.
 - `Space` opens the topic screen. During an incident it goes directly to a related question; otherwise you can choose a topic. Gravity pauses there, but the game clock and incident deadlines keep running. Answering automatically resumes play.
+- On a question, use `↑` and `↓` to highlight an answer and `Enter` to submit it, or click any answer directly.
 - `F` toggles in-game browser fullscreen so the board can use the entire laptop display; `Esc` exits fullscreen.
 - Every new or restarted game receives a fresh random QuadBlock sequence, with immediate duplicate pieces excluded.
 - Clearing rows scores 100/300/500/800 points for one through four rows. Every elapsed second scores one point, and a correct answer scores 100.
