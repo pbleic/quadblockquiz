@@ -22,6 +22,7 @@ Random selection uses an explicit Erlang RNG state stored inside the game state.
 - A point is earned for every elapsed second, including while the topic screen is open. Row clears and correct quiz answers add points.
 - Space opens the topic screen and stops only gravity. The ten-minute clock and vulnerability deadlines continue.
 - Correct answers award a loot box containing one powerup: Row Blast, Slow Clock, or Hotfix.
+- An active incident lists its related topic in the incident card and highlights that topic in the question menu. Selecting it prioritizes an incident-related question so a correct response reliably resolves the incident. Spending one stored Hotfix bypasses the question and resolves it immediately.
 - Random cyberattack and licensing-lawsuit events begin after 30 seconds and recur after resolution. Ignoring an event until its deadline applies its specified penalty.
 - Left/right movement and quarter-turn rotation remain available throughout play. Rotation uses small horizontal and upward boundary kicks so valid turns continue near walls and the floor.
 - The game ends when a new QuadBlock cannot spawn, the player quits, or ten minutes elapse. Ignored incidents remain active and can indirectly end the run through board pressure.

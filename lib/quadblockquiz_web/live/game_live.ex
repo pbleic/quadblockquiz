@@ -93,8 +93,13 @@ defmodule QuadblockquizWeb.GameLive do
     do: max(0, div(game.active_event.deadline_at - game.elapsed_ms + 999, 1000))
 
   defp new_game do
+    seed = Application.get_env(:quadblockquiz, :game_seed) || random_seed()
+    Game.new(Content.load!(), seed: seed)
+  end
+
+  defp random_seed do
     <<a::unsigned-32, b::unsigned-32, c::unsigned-32>> = :crypto.strong_rand_bytes(12)
-    Game.new(Content.load!(), seed: {a, b, c})
+    {a, b, c}
   end
 
   defp kind_label("licensing_lawsuit"), do: "Licensing lawsuit"
@@ -150,7 +155,16 @@ defmodule QuadblockquizWeb.GameLive do
                   <h2>Choose a topic</h2>
                   <div class="topic-list">
                     <%= for topic <- Game.topics(@game) do %>
-                      <button phx-click="topic" phx-value-name={topic}><%= topic %></button>
+                      <button
+                        class={if Game.topic_resolves_incident?(@game, topic), do: "incident-topic"}
+                        phx-click="topic"
+                        phx-value-name={topic}
+                      >
+                        <span><%= topic %></span>
+                        <%= if Game.topic_resolves_incident?(@game, topic) do %>
+                          <small>FIXES ACTIVE INCIDENT</small>
+                        <% end %>
+                      </button>
                     <% end %>
                   </div>
                   <div class="overlay-actions">
@@ -189,6 +203,11 @@ defmodule QuadblockquizWeb.GameLive do
               <h2><%= @game.active_event.definition["title"] %></h2>
               <p><%= @game.active_event.definition["summary"] %></p>
               <p class="education"><%= @game.active_event.definition["education"] %></p>
+              <div class="incident-response">
+                <span>ANSWER TOPIC</span>
+                <strong><%= Enum.join(Game.incident_topics(@game), " OR ") %></strong>
+                <small>Answer correctly, or spend 1 Hotfix to resolve immediately.</small>
+              </div>
               <%= if @game.active_event.breached do %>
                 <div class="deadline breached">PENALTY ACTIVE — answer its topic or use Hotfix</div>
               <% else %>
@@ -200,7 +219,7 @@ defmodule QuadblockquizWeb.GameLive do
           </section>
 
           <section class="powerups">
-            <div class="section-title"><span>POWERUPS</span><small>FROM LOOT BOXES</small></div>
+            <div class="section-title"><span>POWERUPS</span><small>RANDOM · 1 OF 3</small></div>
             <button phx-click="powerup" phx-value-name="row_blast" disabled={@game.inventory.row_blast == 0}>
               <span class="power-icon">▰</span><span><strong>Row Blast</strong><small>Clear bottom two rows</small></span><b><%= @game.inventory.row_blast %></b>
             </button>
@@ -208,7 +227,7 @@ defmodule QuadblockquizWeb.GameLive do
               <span class="power-icon">◷</span><span><strong>Slow Clock</strong><small>Slower fall for 15 seconds</small></span><b><%= @game.inventory.slow_clock %></b>
             </button>
             <button phx-click="powerup" phx-value-name="hotfix" disabled={@game.inventory.hotfix == 0 || is_nil(@game.active_event)}>
-              <span class="power-icon">✦</span><span><strong>Hotfix</strong><small>Resolve active incident</small></span><b><%= @game.inventory.hotfix %></b>
+              <span class="power-icon">✦</span><span><strong>Hotfix</strong><small>Spend 1 to resolve active incident</small></span><b><%= @game.inventory.hotfix %></b>
             </button>
           </section>
 

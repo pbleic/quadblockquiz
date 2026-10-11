@@ -22,6 +22,15 @@ defmodule Quadblockquiz.GameTest do
     "penalty" => "garbage_rows",
     "deadline_seconds" => 2
   }
+  @unrelated_question %{
+    "id" => "q2",
+    "topic" => "Secure Coding",
+    "prompt" => "Different issue?",
+    "choices" => ["Safe", "Unsafe"],
+    "answer_index" => 0,
+    "explanation" => "Different incident.",
+    "vulnerability_id" => "cross-site-scripting"
+  }
 
   defp new_game,
     do: Game.new(%{questions: [@question], vulnerabilities: [@event]}, seed: {1, 2, 3})
@@ -107,6 +116,15 @@ defmodule Quadblockquiz.GameTest do
     assert answered.active_event == nil
     assert Enum.sum(Map.values(answered.inventory)) == 1
     assert answered.last_loot in [:row_blast, :slow_clock, :hotfix]
+  end
+
+  test "an incident topic identifies and selects its related question" do
+    content = %{questions: [@unrelated_question, @question], vulnerabilities: [@event]}
+    game = Game.new(content, seed: {1, 2, 3}) |> Game.tick(30_000) |> Game.toggle_topics()
+
+    assert Game.incident_topics(game) == ["Secure Coding"]
+    assert Game.topic_resolves_incident?(game, "Secure Coding")
+    assert Game.choose_topic(game, "Secure Coding").current_question["id"] == "q1"
   end
 
   test "wrong answers cost points and give no loot" do

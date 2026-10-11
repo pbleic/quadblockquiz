@@ -115,6 +115,11 @@ defmodule Quadblockquiz.Game do
   def choose_topic(%__MODULE__{status: :topics} = game, topic) do
     candidates = Enum.filter(game.questions, &(&1["topic"] == topic))
 
+    related_candidates =
+      Enum.filter(candidates, &related_to_active?(&1, game.active_event))
+
+    candidates = if related_candidates == [], do: candidates, else: related_candidates
+
     case candidates do
       [] ->
         %{game | last_message: "No questions are available for that topic."}
@@ -176,6 +181,19 @@ defmodule Quadblockquiz.Game do
 
   def topics(%__MODULE__{} = game),
     do: game.questions |> Enum.map(& &1["topic"]) |> Enum.uniq() |> Enum.sort()
+
+  def incident_topics(%__MODULE__{active_event: nil}), do: []
+
+  def incident_topics(%__MODULE__{} = game) do
+    game.questions
+    |> Enum.filter(&related_to_active?(&1, game.active_event))
+    |> Enum.map(& &1["topic"])
+    |> Enum.uniq()
+    |> Enum.sort()
+  end
+
+  def topic_resolves_incident?(%__MODULE__{} = game, topic),
+    do: topic in incident_topics(game)
 
   def remaining_seconds(%__MODULE__{} = game), do: div(@game_limit_ms - game.elapsed_ms, 1000)
 
