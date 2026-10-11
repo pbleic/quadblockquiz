@@ -29,11 +29,11 @@ defmodule Quadblockquiz.Game do
 
   @type t :: %__MODULE__{}
 
-  def new(content, opts \\ []) do
-    seed = Keyword.get(opts, :seed, {101, 202, 303})
+  def new(content, opts) do
+    seed = Keyword.fetch!(opts, :seed)
     rng = :rand.seed_s(:exsplus, seed)
     {kind, rng} = pick(Piece.kinds(), rng)
-    {next_kind, rng} = pick(Piece.kinds(), rng)
+    {next_kind, rng} = pick_piece_except(kind, rng)
 
     %__MODULE__{
       board: Board.new(),
@@ -235,7 +235,7 @@ defmodule Quadblockquiz.Game do
   defp lock_and_spawn(game) do
     {board, cleared} = Board.lock(game.board, game.piece)
     clear_score = %{0 => 0, 1 => 100, 2 => 300, 3 => 500, 4 => 800}[cleared]
-    {next_kind, rng} = pick(Piece.kinds(), game.rng)
+    {next_kind, rng} = pick_piece_except(game.next_piece, game.rng)
     piece = Piece.new(game.next_piece)
 
     game = %{
@@ -363,6 +363,12 @@ defmodule Quadblockquiz.Game do
   defp pick(items, rng) do
     {number, rng} = :rand.uniform_s(length(items), rng)
     {Enum.at(items, number - 1), rng}
+  end
+
+  defp pick_piece_except(previous_kind, rng) do
+    Piece.kinds()
+    |> List.delete(previous_kind)
+    |> pick(rng)
   end
 
   defp loot_name(:row_blast), do: "Row Blast"

@@ -13,7 +13,7 @@ defmodule QuadblockquizWeb.GameLive do
     {:ok,
      socket
      |> assign(:page_title, "Quadblockquiz — Supply Chain Edition")
-     |> assign(:game, Game.new(Content.load!()))}
+     |> assign(:game, new_game())}
   end
 
   @impl true
@@ -46,7 +46,7 @@ defmodule QuadblockquizWeb.GameLive do
         "drop" -> Game.hard_drop(socket.assigns.game)
         "topics" -> Game.toggle_topics(socket.assigns.game)
         "quit" -> Game.quit(socket.assigns.game)
-        "restart" -> Game.new(Content.load!())
+        "restart" -> new_game()
       end
 
     {:noreply, assign(socket, :game, game)}
@@ -91,6 +91,11 @@ defmodule QuadblockquizWeb.GameLive do
 
   defp deadline_seconds(game),
     do: max(0, div(game.active_event.deadline_at - game.elapsed_ms + 999, 1000))
+
+  defp new_game do
+    <<a::unsigned-32, b::unsigned-32, c::unsigned-32>> = :crypto.strong_rand_bytes(12)
+    Game.new(Content.load!(), seed: {a, b, c})
+  end
 
   defp kind_label("licensing_lawsuit"), do: "Licensing lawsuit"
   defp kind_label(_), do: "Cyberattack"

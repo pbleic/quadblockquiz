@@ -20,7 +20,7 @@ defmodule Quadblockquiz.MixProject do
   def application do
     [
       mod: {Quadblockquiz.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:crypto, :logger, :runtime_tools]
     ]
   end
 

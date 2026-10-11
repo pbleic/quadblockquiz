@@ -2,6 +2,7 @@ defmodule Quadblockquiz.GameTest do
   use ExUnit.Case, async: true
 
   alias Quadblockquiz.Game
+  alias Quadblockquiz.Game.Board
 
   @question %{
     "id" => "q1",
@@ -33,6 +34,21 @@ defmodule Quadblockquiz.GameTest do
     dropped = Game.hard_drop(moved)
     assert map_size(dropped.board.cells) == 4
     assert dropped.score > game.score
+  end
+
+  test "the piece generator does not produce back-to-back identical pieces" do
+    game = new_game()
+
+    {kinds, _game} =
+      Enum.reduce(1..30, {[game.piece.kind], game}, fn _, {kinds, game} ->
+        spawned = Game.hard_drop(game)
+        reset = %{spawned | board: Board.new(), status: :running}
+        {[reset.piece.kind | kinds], reset}
+      end)
+
+    assert kinds
+           |> Enum.chunk_every(2, 1, :discard)
+           |> Enum.all?(fn [left, right] -> left != right end)
   end
 
   test "rotation uses an upward floor kick instead of stopping near the bottom" do

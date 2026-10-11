@@ -33,6 +33,7 @@ mix test
 - `←` and `→` move the falling QuadBlock.
 - `↑` rotates it; `↓` soft-drops it; `Enter` hard-drops it.
 - `Space` opens the topic screen. Gravity pauses there, but the game clock and incident deadlines keep running.
+- Every new or restarted game receives a fresh random QuadBlock sequence, with immediate duplicate pieces excluded.
 - Clearing rows scores 100/300/500/800 points for one through four rows. Every elapsed second scores one point, and a correct answer scores 100.
 - Correct answers open a loot box containing **Row Blast**, **Slow Clock**, or **Hotfix**.
 - A related correct answer or a Hotfix resolves the active cyberattack or licensing lawsuit. If its deadline expires, the event adds risk rows, accelerates falling, or drains score. Core movement and rotation controls always remain available when the piece has room.

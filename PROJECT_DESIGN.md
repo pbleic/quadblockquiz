@@ -12,7 +12,7 @@ Quadblockquiz is a browser-based educational tetrominoes game about software sup
 - `Quadblockquiz.Content` loads and validates extensible JSON definitions from `priv/content`.
 - `QuadblockquizWeb.GameLive` owns the browser timer and renders state. It contains no game rules.
 
-Random selection uses an explicit Erlang RNG state stored inside the game state. Given the same seed and actions, the engine produces the same result. No database or user account is required for this initial anonymous-play release.
+Random selection uses an explicit Erlang RNG state stored inside the game state. LiveView supplies a fresh cryptographic seed for every new or restarted game, while tests provide a fixed seed so transitions remain reproducible. The piece picker excludes the current preview piece from the next draw to prevent immediate duplicates. No database or user account is required for this initial anonymous-play release.
 
 ## Rules and terminology
 
