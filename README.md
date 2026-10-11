@@ -34,13 +34,13 @@ For development setup and verification:
 
 - `←` and `→` move the falling QuadBlock.
 - `↑` rotates it; `↓` soft-drops it; `Enter` hard-drops it.
-- `Space` opens the topic screen. Gravity pauses there, but the game clock and incident deadlines keep running.
+- `Space` opens the topic screen. During an incident it goes directly to a related question; otherwise you can choose a topic. Gravity pauses there, but the game clock and incident deadlines keep running. Answering automatically resumes play.
 - `F` toggles in-game browser fullscreen so the board can use the entire laptop display; `Esc` exits fullscreen.
 - Every new or restarted game receives a fresh random QuadBlock sequence, with immediate duplicate pieces excluded.
 - Clearing rows scores 100/300/500/800 points for one through four rows. Every elapsed second scores one point, and a correct answer scores 100.
 - Correct answers open a loot box containing **Row Blast**, **Slow Clock**, or **Hotfix**, each with an equal one-in-three chance.
 - A related correct answer or a Hotfix resolves the active cyberattack or licensing lawsuit. If its deadline expires, the event adds risk rows, accelerates falling, or drains score. Core movement and rotation controls always remain available when the piece has room.
-- The incident card names the related question topic, and the Topics screen highlights it. Choosing that topic prioritizes a question that resolves the incident; alternatively, spending one stored Hotfix resolves it immediately.
+- The incident card tells you to press `Space`, which opens a related question directly. Answer it correctly to resolve the incident, or spend one stored Hotfix to resolve it immediately.
 - The run ends when the stack blocks a new QuadBlock, you quit from the topic screen, or ten minutes expire.
 
 Alternating between block play and questions is the intended strategy: quizzes fund the powerups that make later incidents and faster levels manageable.

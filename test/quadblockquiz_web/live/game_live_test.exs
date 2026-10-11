@@ -29,13 +29,14 @@ defmodule QuadblockquizWeb.GameLiveTest do
     assert has_element?(view, ".board[data-piece-y=\"1\"]")
   end
 
-  test "an active incident names and highlights a resolving topic", %{conn: conn} do
+  test "an active incident opens its related question directly", %{conn: conn} do
     {:ok, view, _html} = live(conn, "/")
     Enum.each(1..120, fn _ -> send(view.pid, :tick) end)
 
-    assert has_element?(view, ".incident-response", "ANSWER TOPIC")
+    assert has_element?(view, ".incident-response", "Press Space")
 
     view |> element("button[phx-value-name=topics]") |> render_click()
-    assert has_element?(view, ".topic-list .incident-topic", "FIXES ACTIVE INCIDENT")
+    assert has_element?(view, ".topic-overlay .question")
+    refute has_element?(view, ".topic-list")
   end
 end

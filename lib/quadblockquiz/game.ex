@@ -73,8 +73,14 @@ defmodule Quadblockquiz.Game do
   def hard_drop(%__MODULE__{status: :running} = game), do: hard_drop_steps(game, 0)
   def hard_drop(game), do: game
 
-  def toggle_topics(%__MODULE__{status: :running} = game),
-    do: %{game | status: :topics, current_question: nil, last_loot: nil}
+  def toggle_topics(%__MODULE__{status: :running} = game) do
+    game = %{game | status: :topics, current_question: nil, last_loot: nil}
+
+    case incident_topics(game) do
+      [topic | _rest] -> choose_topic(game, topic)
+      [] -> game
+    end
+  end
 
   def toggle_topics(%__MODULE__{status: :topics} = game),
     do: %{game | status: :running, current_question: nil}
@@ -147,6 +153,7 @@ defmodule Quadblockquiz.Game do
       %{
         game
         | score: game.score + 100,
+          status: :running,
           inventory: inventory,
           current_question: nil,
           active_event: active_event,
@@ -160,6 +167,7 @@ defmodule Quadblockquiz.Game do
       %{
         game
         | score: max(0, game.score - 25),
+          status: :running,
           current_question: nil,
           last_message: "Not quite — #{question["explanation"]}"
       }
@@ -192,8 +200,8 @@ defmodule Quadblockquiz.Game do
     |> Enum.sort()
   end
 
-  def topic_resolves_incident?(%__MODULE__{} = game, topic),
-    do: topic in incident_topics(game)
+  def incident_response_topic(%__MODULE__{} = game),
+    do: game |> incident_topics() |> List.first()
 
   def remaining_seconds(%__MODULE__{} = game), do: div(@game_limit_ms - game.elapsed_ms, 1000)
 

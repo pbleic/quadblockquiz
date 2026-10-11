@@ -155,16 +155,7 @@ defmodule QuadblockquizWeb.GameLive do
                   <h2>Choose a topic</h2>
                   <div class="topic-list">
                     <%= for topic <- Game.topics(@game) do %>
-                      <button
-                        class={if Game.topic_resolves_incident?(@game, topic), do: "incident-topic"}
-                        phx-click="topic"
-                        phx-value-name={topic}
-                      >
-                        <span><%= topic %></span>
-                        <%= if Game.topic_resolves_incident?(@game, topic) do %>
-                          <small>FIXES ACTIVE INCIDENT</small>
-                        <% end %>
-                      </button>
+                      <button phx-click="topic" phx-value-name={topic}><%= topic %></button>
                     <% end %>
                   </div>
                   <div class="overlay-actions">
@@ -204,9 +195,9 @@ defmodule QuadblockquizWeb.GameLive do
               <p><%= @game.active_event.definition["summary"] %></p>
               <p class="education"><%= @game.active_event.definition["education"] %></p>
               <div class="incident-response">
-                <span>ANSWER TOPIC</span>
-                <strong><%= Enum.join(Game.incident_topics(@game), " OR ") %></strong>
-                <small>Answer correctly, or spend 1 Hotfix to resolve immediately.</small>
+                <span>HOW TO RESPOND</span>
+                <strong>Press Space for a <%= Game.incident_response_topic(@game) || "related security" %> question.</strong>
+                <small>Answer correctly, or spend 1 Hotfix.</small>
               </div>
               <%= if @game.active_event.breached do %>
                 <div class="deadline breached">PENALTY ACTIVE — answer its topic or use Hotfix</div>

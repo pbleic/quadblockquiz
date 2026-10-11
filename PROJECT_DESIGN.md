@@ -12,7 +12,7 @@ Quadblockquiz is a browser-based educational tetrominoes game about software sup
 - `Quadblockquiz.Content` loads and validates extensible JSON definitions from `priv/content`.
 - `QuadblockquizWeb.GameLive` owns the browser timer and renders state. It contains no game rules.
 
-The interface uses readable laptop-scale typography and a height-aware desktop layout. On viewports 900 pixels tall or shorter, nonessential header copy is hidden and the board scales to keep the complete game shell on screen at 100% browser zoom. The `F` key requests browser fullscreen, with `Esc` returning to windowed mode.
+The interface uses readable laptop-scale typography and a height-aware desktop layout. On viewports 1200 pixels tall or shorter, including common fullscreen displays, nonessential header copy is hidden and the board scales to keep the complete game shell on screen at 100% browser zoom. The `F` key requests browser fullscreen, with `Esc` returning to windowed mode.
 
 `bin/start` is the supported local launcher. It prefers the known-compatible Elixir 1.20/OTP 27 installation when available and isolates Mix, Hex, Rebar, dependencies, and build products beneath the repository's ignored `.local` directory. This prevents global-tool and stale-build mismatches from affecting startup.
 
@@ -24,7 +24,7 @@ Random selection uses an explicit Erlang RNG state stored inside the game state.
 - A point is earned for every elapsed second, including while the topic screen is open. Row clears and correct quiz answers add points.
 - Space opens the topic screen and stops only gravity. The ten-minute clock and vulnerability deadlines continue.
 - Correct answers award a loot box containing one powerup: Row Blast, Slow Clock, or Hotfix.
-- An active incident lists its related topic in the incident card and highlights that topic in the question menu. Selecting it prioritizes an incident-related question so a correct response reliably resolves the incident. Spending one stored Hotfix bypasses the question and resolves it immediately.
+- During an active incident, pressing Space bypasses topic selection and opens an incident-related question directly; a correct response reliably resolves the incident. Without an incident, the topic menu remains available for optional study. Answering any question automatically resumes play. Spending one stored Hotfix bypasses the question and resolves an incident immediately.
 - Random cyberattack and licensing-lawsuit events begin after 30 seconds and recur after resolution. Ignoring an event until its deadline applies its specified penalty.
 - Left/right movement and quarter-turn rotation remain available throughout play. Rotation uses small horizontal and upward boundary kicks so valid turns continue near walls and the floor.
 - The game ends when a new QuadBlock cannot spawn, the player quits, or ten minutes elapse. Ignored incidents remain active and can indirectly end the run through board pressure.

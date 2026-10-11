@@ -114,23 +114,25 @@ defmodule Quadblockquiz.GameTest do
 
     assert answered.score == game.score + 100
     assert answered.active_event == nil
+    assert answered.status == :running
     assert Enum.sum(Map.values(answered.inventory)) == 1
     assert answered.last_loot in [:row_blast, :slow_clock, :hotfix]
   end
 
-  test "an incident topic identifies and selects its related question" do
+  test "opening topics during an incident goes directly to a related question" do
     content = %{questions: [@unrelated_question, @question], vulnerabilities: [@event]}
     game = Game.new(content, seed: {1, 2, 3}) |> Game.tick(30_000) |> Game.toggle_topics()
 
     assert Game.incident_topics(game) == ["Secure Coding"]
-    assert Game.topic_resolves_incident?(game, "Secure Coding")
-    assert Game.choose_topic(game, "Secure Coding").current_question["id"] == "q1"
+    assert Game.incident_response_topic(game) == "Secure Coding"
+    assert game.current_question["id"] == "q1"
   end
 
   test "wrong answers cost points and give no loot" do
     game = %{new_game() | score: 50} |> Game.toggle_topics() |> Game.choose_topic("Secure Coding")
     answered = Game.answer(game, 1)
     assert answered.score == 25
+    assert answered.status == :running
     assert Enum.sum(Map.values(answered.inventory)) == 0
   end
 
