@@ -17,8 +17,11 @@ defmodule Quadblockquiz.Game do
             gravity_ms: 0,
             status: :running,
             questions: [],
+            question_decks: %{},
             vulnerabilities: [],
             current_question: nil,
+            current_question_pool: nil,
+            last_question_id: nil,
             active_event: nil,
             next_event_at: @event_spacing_ms,
             inventory: %{row_blast: 0, slow_clock: 0, hotfix: 0},
@@ -82,8 +85,17 @@ defmodule Quadblockquiz.Game do
     end
   end
 
-  def toggle_topics(%__MODULE__{status: :topics} = game),
-    do: %{game | status: :running, current_question: nil}
+  def toggle_topics(%__MODULE__{status: :topics} = game) do
+    decks = requeue_missed_question(game)
+
+    %{
+      game
+      | status: :running,
+        current_question: nil,
+        current_question_pool: nil,
+        question_decks: decks
+    }
+  end
 
   def toggle_topics(game), do: game
 
@@ -131,8 +143,15 @@ defmodule Quadblockquiz.Game do
         %{game | last_message: "No questions are available for that topic."}
 
       _ ->
-        {question, rng} = pick(candidates, game.rng)
-        %{game | current_question: question, rng: rng, last_loot: nil}
+        pool = question_pool(game, topic, related_candidates)
+        {question, game} = draw_question(game, candidates, pool)
+
+        %{
+          game
+          | current_question: question,
+            current_question_pool: pool,
+            last_loot: nil
+        }
     end
   end
 
@@ -156,19 +175,26 @@ defmodule Quadblockquiz.Game do
           status: :running,
           inventory: inventory,
           current_question: nil,
+          current_question_pool: nil,
           active_event: active_event,
           last_loot: loot,
+          last_question_id: question["id"],
           last_message: message,
           rng: rng,
           next_event_at:
             if(fixed, do: game.elapsed_ms + @event_spacing_ms, else: game.next_event_at)
       }
     else
+      decks = requeue_missed_question(game)
+
       %{
         game
         | score: max(0, game.score - 25),
           status: :running,
           current_question: nil,
+          current_question_pool: nil,
+          question_decks: decks,
+          last_question_id: question["id"],
           last_message: "Not quite — #{question["explanation"]}"
       }
     end
@@ -389,6 +415,68 @@ defmodule Quadblockquiz.Game do
   defp pick(items, rng) do
     {number, rng} = :rand.uniform_s(length(items), rng)
     {Enum.at(items, number - 1), rng}
+  end
+
+  defp question_pool(game, topic, related_candidates) do
+    if related_candidates == [] do
+      {:topic, topic}
+    else
+      {:incident, game.active_event.definition["id"]}
+    end
+  end
+
+  defp draw_question(game, candidates, pool) do
+    candidate_ids = MapSet.new(candidates, & &1["id"])
+
+    deck =
+      game.question_decks
+      |> Map.get(pool, [])
+      |> Enum.filter(&MapSet.member?(candidate_ids, &1))
+
+    {deck, rng} =
+      if deck == [] do
+        {shuffled, rng} = shuffle(candidates, game.rng)
+
+        deck =
+          shuffled
+          |> avoid_immediate_repeat(game.last_question_id)
+          |> Enum.map(& &1["id"])
+
+        {deck, rng}
+      else
+        {deck, game.rng}
+      end
+
+    [question_id | rest] = deck
+    decks = Map.put(game.question_decks, pool, rest)
+    question = Enum.find(candidates, &(&1["id"] == question_id))
+
+    {question, %{game | question_decks: decks, rng: rng}}
+  end
+
+  defp avoid_immediate_repeat([%{"id" => id} = first | rest], id) when rest != [],
+    do: rest ++ [first]
+
+  defp avoid_immediate_repeat(deck, _last_question_id), do: deck
+
+  defp requeue_missed_question(%__MODULE__{current_question_pool: nil} = game),
+    do: game.question_decks
+
+  defp requeue_missed_question(game) do
+    id = game.current_question["id"]
+
+    Map.update(game.question_decks, game.current_question_pool, [id], fn deck ->
+      if id in deck, do: deck, else: deck ++ [id]
+    end)
+  end
+
+  defp shuffle(items, rng), do: shuffle(items, rng, [])
+  defp shuffle([], rng, shuffled), do: {shuffled, rng}
+
+  defp shuffle(items, rng, shuffled) do
+    {number, rng} = :rand.uniform_s(length(items), rng)
+    {item, rest} = List.pop_at(items, number - 1)
+    shuffle(rest, rng, [item | shuffled])
   end
 
   defp pick_piece_except(previous_kind, rng) do

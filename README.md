@@ -39,6 +39,7 @@ For development setup and verification:
 - Every new or restarted game receives a fresh random QuadBlock sequence, with immediate duplicate pieces excluded.
 - Clearing rows scores 100/300/500/800 points for one through four rows. Every elapsed second scores one point, and a correct answer scores 100.
 - Correct answers open a loot box containing **Row Blast**, **Slow Clock**, or **Hotfix**, each with an equal one-in-three chance.
+- The bank contains more than 100 original questions. Each topic is shuffled; correct answers cycle through its available questions before a repeat, while a missed or skipped question returns later for practice.
 - A related correct answer or a Hotfix resolves the active cyberattack or licensing lawsuit. If its deadline expires, the event adds risk rows, accelerates falling, or drains score. Core movement and rotation controls always remain available when the piece has room.
 - The incident card tells you to press `Space`, which opens a related question directly. Answer it correctly to resolve the incident, or spend one stored Hotfix to resolve it immediately.
 - The run ends when the stack blocks a new QuadBlock, you quit from the topic screen, or ten minutes expire.
@@ -47,9 +48,11 @@ Alternating between block play and questions is the intended strategy: quizzes f
 
 ## Content and architecture
 
-Original questions are in [`priv/content/questions.json`](priv/content/questions.json), and incident definitions are in [`priv/content/vulnerabilities.json`](priv/content/vulnerabilities.json). Add entries there without changing game rules. Content is validated when a game starts.
+Original questions are in [`priv/content/questions.json`](priv/content/questions.json) and the JSON bank files under [`priv/content/questions/`](priv/content/questions/); incident definitions are in [`priv/content/vulnerabilities.json`](priv/content/vulnerabilities.json). Add entries without changing game rules. Content is validated when a game starts, including unique IDs and valid vulnerability relationships.
 
 All gameplay rules are isolated from LiveView in `lib/quadblockquiz/game.ex` and `lib/quadblockquiz/game/`. Randomness is explicit state, so seeded games are repeatable in tests. `QuadblockquizWeb.GameLive` only schedules ticks, maps input to engine calls, and renders the result. See [`PROJECT_DESIGN.md`](PROJECT_DESIGN.md) for the living design.
+
+Questions remain file-based for this release. See [`docs/DATABASE_DECISION.md`](docs/DATABASE_DECISION.md) for the reasons to keep that design now, the product requirements that would justify a database, and a proposed Ecto/PostgreSQL migration path.
 
 The browser bundle is checked in so normal startup needs no Node toolchain. After changing files under `assets/`, rebuild it from that directory with:
 

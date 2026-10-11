@@ -1,0 +1,262 @@
+[
+  {
+    "id": "q-deps-02",
+    "topic": "Dependencies",
+    "prompt": "What is the first step after learning a production dependency has a critical CVE?",
+    "choices": [
+      "Publish credentials",
+      "Confirm affected versions and actual exposure",
+      "Delete every lockfile"
+    ],
+    "answer_index": 1,
+    "explanation": "Verify the advisory, installed version, and reachable usage so remediation is accurate and prioritized.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-03",
+    "topic": "Dependencies",
+    "prompt": "Why commit a dependency lockfile for an application?",
+    "choices": [
+      "It makes resolved versions reproducible",
+      "It hides every vulnerability",
+      "It replaces tests"
+    ],
+    "answer_index": 0,
+    "explanation": "A lockfile records exact resolved versions so builds do not drift unexpectedly.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-04",
+    "topic": "Dependencies",
+    "prompt": "What does a software bill of materials describe?",
+    "choices": [
+      "Employee salaries",
+      "Screen layouts",
+      "Components included in software"
+    ],
+    "answer_index": 2,
+    "explanation": "An SBOM inventories components and versions to support vulnerability and supply-chain response.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-05",
+    "topic": "Supply Chain",
+    "prompt": "What is dependency confusion?",
+    "choices": [
+      "Rotating a block",
+      "Fetching an attacker package from a public source instead of the intended internal one",
+      "Choosing a variable name"
+    ],
+    "answer_index": 1,
+    "explanation": "Namespace and source controls prevent public packages from impersonating private dependencies.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-06",
+    "topic": "Dependencies",
+    "prompt": "Why automate dependency update pull requests?",
+    "choices": [
+      "To make small updates visible and testable",
+      "To bypass code review",
+      "To remove version history"
+    ],
+    "answer_index": 0,
+    "explanation": "Regular, focused update proposals reduce patch delay while preserving review and testing.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-07",
+    "topic": "Dependencies",
+    "prompt": "A vulnerable package is only a transitive dependency. What should you do?",
+    "choices": [
+      "Ignore all transitive packages",
+      "Rename it locally",
+      "Trace which direct dependency brings it in and update or override safely"
+    ],
+    "answer_index": 2,
+    "explanation": "Transitive components still ship with the product and require an upgrade path or documented mitigation.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-08",
+    "topic": "Supply Chain",
+    "prompt": "What does verifying an artifact checksum establish?",
+    "choices": [
+      "The maintainer is always trustworthy",
+      "The downloaded bytes match an expected digest",
+      "The code has no bugs"
+    ],
+    "answer_index": 1,
+    "explanation": "A trusted checksum detects alteration, but does not prove the component is secure or well designed.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-09",
+    "topic": "Dependencies",
+    "prompt": "Why remove unused dependencies?",
+    "choices": [
+      "They add attack surface and maintenance work",
+      "They increase keyboard speed",
+      "They provide free backups"
+    ],
+    "answer_index": 0,
+    "explanation": "Every component adds code, update obligations, and possible compromise paths even if rarely used.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-10",
+    "topic": "Dependencies",
+    "prompt": "What should happen before a major dependency upgrade reaches production?",
+    "choices": [
+      "Skip staging",
+      "Disable monitoring",
+      "Review changes and run relevant automated and compatibility tests"
+    ],
+    "answer_index": 2,
+    "explanation": "Major updates can include breaking behavior, so review and layered testing control upgrade risk.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-11",
+    "topic": "Supply Chain",
+    "prompt": "Why pin a CI action or build tool to an immutable revision?",
+    "choices": [
+      "It prevents all outages",
+      "A mutable tag can later point to different code",
+      "It makes passwords shorter"
+    ],
+    "answer_index": 1,
+    "explanation": "Immutable references prevent an upstream tag change from silently altering a trusted build.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-12",
+    "topic": "Dependencies",
+    "prompt": "What is a compensating control when no patch exists yet?",
+    "choices": [
+      "Disable the affected feature or block the vulnerable path",
+      "Pretend the advisory is false",
+      "Expose the service publicly"
+    ],
+    "answer_index": 0,
+    "explanation": "A verified mitigation can reduce reachability until an upgrade or vendor fix is available.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-13",
+    "topic": "Supply Chain",
+    "prompt": "What does build provenance help a consumer verify?",
+    "choices": [
+      "Whether users like its colors",
+      "The database row count",
+      "Where and how an artifact was produced"
+    ],
+    "answer_index": 2,
+    "explanation": "Signed provenance links an artifact to its source and build process, supporting trust decisions.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-14",
+    "topic": "Dependencies",
+    "prompt": "Why is version age alone an incomplete risk measure?",
+    "choices": [
+      "Dates replace advisories",
+      "Exposure, known flaws, maintenance, and controls also matter",
+      "Old software cannot execute"
+    ],
+    "answer_index": 1,
+    "explanation": "Prioritization should combine vulnerability evidence and exploitability with operational context.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-15",
+    "topic": "Supply Chain",
+    "prompt": "What is typosquatting in a package registry?",
+    "choices": [
+      "Publishing a malicious package with a name similar to a popular one",
+      "Correcting documentation",
+      "Using semantic versions"
+    ],
+    "answer_index": 0,
+    "explanation": "Attackers use look-alike names to trick developers into installing the wrong package.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-16",
+    "topic": "Dependencies",
+    "prompt": "What should a vulnerability exception include?",
+    "choices": [
+      "Only a thumbs-up emoji",
+      "A permanent promise never to review it",
+      "Owner, rationale, mitigation, and expiration date"
+    ],
+    "answer_index": 2,
+    "explanation": "Time-bounded, owned exceptions keep accepted risk visible and force reassessment.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-17",
+    "topic": "Dependencies",
+    "prompt": "Why monitor dependencies continuously instead of only before release?",
+    "choices": [
+      "Monitoring replaces patching",
+      "New advisories appear after a version is shipped",
+      "Released code cannot change risk"
+    ],
+    "answer_index": 1,
+    "explanation": "A previously accepted component may become known-vulnerable while it remains in production.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-18",
+    "topic": "Supply Chain",
+    "prompt": "Which permission model is safest for package publishing tokens?",
+    "choices": [
+      "Short-lived and scoped to the required package",
+      "Permanent organization-wide administrator",
+      "Shared in a public file"
+    ],
+    "answer_index": 0,
+    "explanation": "Narrow, short-lived credentials limit damage from a compromised release workflow.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-19",
+    "topic": "Dependencies",
+    "prompt": "What does semantic versioning communicate?",
+    "choices": [
+      "Guaranteed absence of vulnerabilities",
+      "Legal ownership",
+      "Intended compatibility impact of releases"
+    ],
+    "answer_index": 2,
+    "explanation": "Semantic versions signal breaking, additive, and corrective changes, though consumers must still test.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-20",
+    "topic": "Supply Chain",
+    "prompt": "Why isolate build jobs that process untrusted contributions?",
+    "choices": [
+      "To avoid compiling code",
+      "To limit access to secrets and release systems",
+      "To increase source file size"
+    ],
+    "answer_index": 1,
+    "explanation": "Untrusted build input should not share credentials or privileges with trusted publishing jobs.",
+    "vulnerability_id": "outdated-dependency"
+  },
+  {
+    "id": "q-deps-21",
+    "topic": "Dependencies",
+    "prompt": "After patching a vulnerable library, what evidence is most useful?",
+    "choices": [
+      "A rebuilt artifact inventory showing the fixed version plus passing tests",
+      "A renamed branch",
+      "An empty changelog"
+    ],
+    "answer_index": 0,
+    "explanation": "Confirm the fixed component is actually in the delivered artifact and that the upgrade behaves correctly.",
+    "vulnerability_id": "outdated-dependency"
+  }
+]

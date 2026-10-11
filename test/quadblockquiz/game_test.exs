@@ -136,6 +136,41 @@ defmodule Quadblockquiz.GameTest do
     assert Enum.sum(Map.values(answered.inventory)) == 0
   end
 
+  test "a topic deck presents every question before repeating one" do
+    questions =
+      for id <- 1..3 do
+        %{@question | "id" => "deck-#{id}", "prompt" => "Question #{id}?"}
+      end
+
+    game = Game.new(%{questions: questions, vulnerabilities: [@event]}, seed: {4, 5, 6})
+
+    {seen, game} =
+      Enum.reduce(1..3, {[], game}, fn _, {seen, game} ->
+        asking = game |> Game.toggle_topics() |> Game.choose_topic("Secure Coding")
+        {[asking.current_question["id"] | seen], Game.answer(asking, 0)}
+      end)
+
+    assert length(Enum.uniq(seen)) == 3
+
+    asking = game |> Game.toggle_topics() |> Game.choose_topic("Secure Coding")
+    assert asking.current_question["id"] in seen
+  end
+
+  test "a missed question returns later rather than repeating immediately" do
+    questions =
+      for id <- 1..3 do
+        %{@question | "id" => "retry-#{id}", "prompt" => "Question #{id}?"}
+      end
+
+    game = Game.new(%{questions: questions, vulnerabilities: [@event]}, seed: {7, 8, 9})
+    first = game |> Game.toggle_topics() |> Game.choose_topic("Secure Coding")
+    missed_id = first.current_question["id"]
+    game = Game.answer(first, 1)
+    second = game |> Game.toggle_topics() |> Game.choose_topic("Secure Coding")
+
+    refute second.current_question["id"] == missed_id
+  end
+
   test "hotfix inventory resolves an incident" do
     game = new_game() |> Game.tick(30_000)
     game = %{game | inventory: %{game.inventory | hotfix: 1}}

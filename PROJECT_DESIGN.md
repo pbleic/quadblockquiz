@@ -18,6 +18,8 @@ The interface uses readable laptop-scale typography and a height-aware desktop l
 
 Random selection uses an explicit Erlang RNG state stored inside the game state. LiveView supplies a fresh cryptographic seed for every new or restarted game, while tests provide a fixed seed so transitions remain reproducible. The piece picker excludes the current preview piece from the next draw to prevent immediate duplicates. No database or user account is required for this initial anonymous-play release.
 
+Quiz selection uses a shuffled deck per topic or active incident. A correctly answered question is not repeated until the applicable deck is exhausted. A missed or skipped question is placed at the back of the current deck so it returns after other material. Deck state lasts for the current browser game only.
+
 ## Rules and terminology
 
 - The board is 10 columns by 20 rows. Five shapes are available: Bar, Box, Tee, Boot, and Zig.
@@ -31,7 +33,7 @@ Random selection uses an explicit Erlang RNG state stored inside the game state.
 
 ## Data and extension points
 
-Questions and vulnerability definitions live in JSON under `priv/content`. New content does not require engine changes as long as it uses an existing penalty or powerup identifier. New mechanics require a deliberately tested engine branch.
+Questions and vulnerability definitions live in JSON under `priv/content`. The base question file and categorized files under `priv/content/questions/` form one validated bank. New content does not require engine changes as long as it uses an existing vulnerability identifier. New mechanics require a deliberately tested engine branch. `docs/DATABASE_DECISION.md` records the reasons for remaining file-based and the requirements that would trigger database adoption.
 
 ## Verification
 

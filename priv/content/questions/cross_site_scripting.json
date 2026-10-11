@@ -1,0 +1,262 @@
+[
+  {
+    "id": "q-xss-02",
+    "topic": "Secure Coding",
+    "prompt": "What is the default defense when placing untrusted text into HTML?",
+    "choices": [
+      "Hiding the URL",
+      "Context-appropriate output encoding",
+      "Removing spaces"
+    ],
+    "answer_index": 1,
+    "explanation": "Encode untrusted data for the exact output context so it remains text instead of markup.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-03",
+    "topic": "Secure Coding",
+    "prompt": "Why is HTML encoding not enough inside a JavaScript string?",
+    "choices": [
+      "JavaScript has different parsing rules",
+      "JavaScript cannot contain text",
+      "HTML encoding disables TLS"
+    ],
+    "answer_index": 0,
+    "explanation": "Each browser context has distinct metacharacters, so encoding must match the JavaScript context.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-04",
+    "topic": "Secure Coding",
+    "prompt": "Which DOM API is safest for inserting plain user-visible text?",
+    "choices": [
+      "textContent",
+      "document.write",
+      "innerHTML"
+    ],
+    "answer_index": 2,
+    "explanation": "textContent inserts text without asking the browser to interpret it as HTML.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-05",
+    "topic": "Secure Coding",
+    "prompt": "When is HTML sanitization appropriate?",
+    "choices": [
+      "For checking database indexes",
+      "When users are intentionally allowed limited markup",
+      "For hashing passwords"
+    ],
+    "answer_index": 1,
+    "explanation": "A maintained sanitizer can enforce an allowlist when the product intentionally accepts rich HTML.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-06",
+    "topic": "Secure Coding",
+    "prompt": "What distinguishes stored XSS?",
+    "choices": [
+      "The payload is saved and later served to users",
+      "It exists only in a compiler",
+      "It changes a dependency lockfile"
+    ],
+    "answer_index": 0,
+    "explanation": "Stored XSS persists attacker-controlled content that executes when other users view it.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-07",
+    "topic": "Secure Coding",
+    "prompt": "What distinguishes reflected XSS?",
+    "choices": [
+      "The payload is stored in firmware",
+      "It requires no browser",
+      "Input is immediately included in a response"
+    ],
+    "answer_index": 2,
+    "explanation": "Reflected XSS sends request data back in a response without safe contextual handling.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-08",
+    "topic": "Secure Coding",
+    "prompt": "DOM-based XSS primarily arises where?",
+    "choices": [
+      "A package has no license",
+      "Client-side code sends untrusted data to an unsafe DOM sink",
+      "A database lacks an index"
+    ],
+    "answer_index": 1,
+    "explanation": "DOM XSS occurs when browser-side code moves attacker-controlled data into an execution-capable sink.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-09",
+    "topic": "Secure Coding",
+    "prompt": "What does a strong Content Security Policy provide?",
+    "choices": [
+      "Defense in depth that restricts executable sources",
+      "Automatic password rotation",
+      "SQL parameter binding"
+    ],
+    "answer_index": 0,
+    "explanation": "CSP can reduce XSS impact, but it complements rather than replaces safe output handling.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-10",
+    "topic": "Secure Coding",
+    "prompt": "Why avoid inline event handlers such as onclick with user data?",
+    "choices": [
+      "They make images larger",
+      "They invalidate database backups",
+      "They create an executable JavaScript context"
+    ],
+    "answer_index": 2,
+    "explanation": "Inline handlers are code contexts where unsafe interpolation can become script execution.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-11",
+    "topic": "Secure Coding",
+    "prompt": "Which cookie setting can reduce theft through XSS?",
+    "choices": [
+      "Public access",
+      "HttpOnly",
+      "A longer cookie name"
+    ],
+    "answer_index": 1,
+    "explanation": "HttpOnly prevents JavaScript from reading the cookie, though it does not eliminate XSS itself.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-12",
+    "topic": "Secure Coding",
+    "prompt": "A URL supplied by a user will become a link target. What should happen?",
+    "choices": [
+      "Validate allowed schemes and encode the attribute",
+      "Allow every scheme",
+      "Remove only quotation marks"
+    ],
+    "answer_index": 0,
+    "explanation": "Scheme validation blocks dangerous targets such as javascript URLs, while encoding protects the attribute.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-13",
+    "topic": "Secure Coding",
+    "prompt": "Why is a homegrown HTML tag blocklist fragile?",
+    "choices": [
+      "HTML has only one tag",
+      "Blocklists generate CSP automatically",
+      "Browsers parse many bypassable forms"
+    ],
+    "answer_index": 2,
+    "explanation": "Browser parsing is complex; use a proven sanitizer with an explicit allowlist instead.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-14",
+    "topic": "Secure Coding",
+    "prompt": "Which template behavior is safest by default?",
+    "choices": [
+      "Execute values as scripts",
+      "Automatically escape inserted values",
+      "Mark every value as raw HTML"
+    ],
+    "answer_index": 1,
+    "explanation": "Auto-escaping templates make the ordinary path safe and require explicit review for raw markup.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-15",
+    "topic": "Secure Coding",
+    "prompt": "What should reviewers inspect when code bypasses template escaping?",
+    "choices": [
+      "The data source and sanitization guarantee",
+      "The variable name length",
+      "The screen resolution"
+    ],
+    "answer_index": 0,
+    "explanation": "An escape bypass is safe only when the value has a trustworthy, context-specific sanitization path.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-16",
+    "topic": "Secure Coding",
+    "prompt": "Can input validation alone prevent every XSS flaw?",
+    "choices": [
+      "Yes, if inputs are short",
+      "Yes, when cookies exist",
+      "No, safe output handling is still required"
+    ],
+    "answer_index": 2,
+    "explanation": "Validation narrows expected input, while contextual output encoding protects where data is rendered.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-17",
+    "topic": "Secure Coding",
+    "prompt": "What is risky about assigning untrusted text to innerHTML?",
+    "choices": [
+      "It rotates encryption keys",
+      "The browser parses it as markup",
+      "It always deletes the page"
+    ],
+    "answer_index": 1,
+    "explanation": "innerHTML invokes the HTML parser, which can turn supplied markup into executable content.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-18",
+    "topic": "Secure Coding",
+    "prompt": "A Markdown feature permits embedded HTML. What is the safer policy?",
+    "choices": [
+      "Disable raw HTML or sanitize the rendered result",
+      "Trust all fenced blocks",
+      "Remove periods only"
+    ],
+    "answer_index": 0,
+    "explanation": "Markdown can carry dangerous HTML, so raw markup needs disabling or robust sanitization.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-19",
+    "topic": "Secure Coding",
+    "prompt": "What does the CSP frame-ancestors directive address rather than XSS?",
+    "choices": [
+      "How SQL values are bound",
+      "Which package version is installed",
+      "Who may embed the page"
+    ],
+    "answer_index": 2,
+    "explanation": "frame-ancestors limits embedding and helps prevent clickjacking; other CSP directives constrain scripts.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-20",
+    "topic": "Secure Coding",
+    "prompt": "Why should XSS tests cover several rendering locations?",
+    "choices": [
+      "Tests enlarge the browser",
+      "Text, attributes, URLs, CSS, and scripts have different contexts",
+      "Every page uses a different database"
+    ],
+    "answer_index": 1,
+    "explanation": "A value safe in one output context may be dangerous in another because parsing rules differ.",
+    "vulnerability_id": "cross-site-scripting"
+  },
+  {
+    "id": "q-xss-21",
+    "topic": "Secure Coding",
+    "prompt": "What is a Trusted Types policy designed to reduce?",
+    "choices": [
+      "Unsafe strings reaching dangerous DOM sinks",
+      "Expired package licenses",
+      "Weak database indexes"
+    ],
+    "answer_index": 0,
+    "explanation": "Trusted Types helps enforce controlled creation of values passed to injection-sensitive DOM APIs.",
+    "vulnerability_id": "cross-site-scripting"
+  }
+]

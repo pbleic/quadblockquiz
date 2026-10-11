@@ -1,0 +1,262 @@
+[
+  {
+    "id": "q-license-02",
+    "topic": "Licensing",
+    "prompt": "Why review a dependency license before distribution?",
+    "choices": [
+      "It guarantees security",
+      "Its obligations may affect how the product is delivered",
+      "It changes screen colors"
+    ],
+    "answer_index": 1,
+    "explanation": "Distribution can trigger notice, source, attribution, or other license obligations.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-03",
+    "topic": "Licensing",
+    "prompt": "What is an SPDX identifier used for?",
+    "choices": [
+      "A standardized way to name a software license",
+      "A password hash",
+      "A vulnerability score"
+    ],
+    "answer_index": 0,
+    "explanation": "SPDX identifiers make license metadata consistent and machine-readable.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-04",
+    "topic": "Licensing",
+    "prompt": "What does NOASSERTION in an SBOM generally signal?",
+    "choices": [
+      "The component is public domain",
+      "The package has no code",
+      "The supplier is not asserting a concluded value"
+    ],
+    "answer_index": 2,
+    "explanation": "NOASSERTION records that no determination is being made and should not be read as license-free.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-05",
+    "topic": "Licensing",
+    "prompt": "Why preserve copyright and license notices?",
+    "choices": [
+      "They replace source control",
+      "Many licenses require them in redistributed copies",
+      "They encrypt releases"
+    ],
+    "answer_index": 1,
+    "explanation": "Notice preservation is a common condition of permissive and other open-source licenses.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-06",
+    "topic": "Licensing",
+    "prompt": "What is a license allowlist?",
+    "choices": [
+      "A policy list of licenses preapproved for defined uses",
+      "A list of vulnerable passwords",
+      "An inventory of monitors"
+    ],
+    "answer_index": 0,
+    "explanation": "Allowlists streamline routine choices while unusual licenses receive focused review.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-07",
+    "topic": "Licensing",
+    "prompt": "Why does development-only use not always remove license concerns?",
+    "choices": [
+      "Development computers have no licenses",
+      "Tests are automatically public domain",
+      "Tools may embed code or artifacts in distributed output"
+    ],
+    "answer_index": 2,
+    "explanation": "Build tools, generators, and bundled assets can affect what ultimately ships.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-08",
+    "topic": "Licensing",
+    "prompt": "What should happen when a package has no clear license?",
+    "choices": [
+      "Invent a license",
+      "Pause use and seek clarification or an alternative",
+      "Assume any use is allowed"
+    ],
+    "answer_index": 1,
+    "explanation": "Copyright applies even without a license file, so unclear permission requires review.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-09",
+    "topic": "Licensing",
+    "prompt": "What is dual licensing?",
+    "choices": [
+      "Offering the same work under alternative license choices",
+      "Having two file names",
+      "Publishing two checksums"
+    ],
+    "answer_index": 0,
+    "explanation": "A recipient may choose among offered licenses according to their respective terms.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-10",
+    "topic": "Licensing",
+    "prompt": "Why record the exact component version in a license inventory?",
+    "choices": [
+      "Every version has the same files",
+      "Versions determine screen size",
+      "Licensing or bundled notices can change between versions"
+    ],
+    "answer_index": 2,
+    "explanation": "Accurate versions make the compliance record match the code that was actually delivered.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-11",
+    "topic": "Licensing",
+    "prompt": "What is the purpose of a third-party notices file?",
+    "choices": [
+      "Configure database indexes",
+      "Collect required attributions and license texts for distributed components",
+      "Store API secrets"
+    ],
+    "answer_index": 1,
+    "explanation": "A notices artifact helps satisfy attribution and license-copy obligations for shipped dependencies.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-12",
+    "topic": "Licensing",
+    "prompt": "Does an approved license make every package version safe to use?",
+    "choices": [
+      "No, security, provenance, and package-specific details still matter",
+      "Yes, it removes every other risk",
+      "Yes, if the name is short"
+    ],
+    "answer_index": 0,
+    "explanation": "License approval addresses one dimension; technical and supply-chain risks remain.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-13",
+    "topic": "Licensing",
+    "prompt": "What is a copyleft license condition generally concerned with?",
+    "choices": [
+      "Password length",
+      "Database availability",
+      "Terms applied when covered or derivative work is distributed"
+    ],
+    "answer_index": 2,
+    "explanation": "Copyleft obligations depend on the license and how covered work is combined and conveyed.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-14",
+    "topic": "Licensing",
+    "prompt": "Who should decide a legally ambiguous license case?",
+    "choices": [
+      "The build timer",
+      "The organization's qualified legal or compliance reviewer",
+      "An anonymous package comment"
+    ],
+    "answer_index": 1,
+    "explanation": "Ambiguous facts and obligations need review under the organization's legal process.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-15",
+    "topic": "Licensing",
+    "prompt": "Why scan source and built artifacts for licenses?",
+    "choices": [
+      "Generated or vendored components may appear only in one view",
+      "Scanning guarantees no obligations",
+      "Artifacts contain no dependencies"
+    ],
+    "answer_index": 0,
+    "explanation": "Comparing source and deliverables finds components introduced during build or packaging.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-16",
+    "topic": "Licensing",
+    "prompt": "What is the safest response to a license-policy conflict found before release?",
+    "choices": [
+      "Delete the audit log",
+      "Ship and investigate later",
+      "Replace, reconfigure, or obtain approval before shipping"
+    ],
+    "answer_index": 2,
+    "explanation": "Resolving the conflict before distribution avoids knowingly creating unmet obligations.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-17",
+    "topic": "Licensing",
+    "prompt": "Why track dependency license changes during updates?",
+    "choices": [
+      "Licenses never change",
+      "A new release may adopt different terms",
+      "Updates erase copyright"
+    ],
+    "answer_index": 1,
+    "explanation": "Upgrade review should detect changes in declared license or included third-party material.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-18",
+    "topic": "Licensing",
+    "prompt": "What does license compatibility ask?",
+    "choices": [
+      "Whether obligations can be satisfied together for the intended combination and distribution",
+      "Whether two packages share a color",
+      "Whether code compiles quickly"
+    ],
+    "answer_index": 0,
+    "explanation": "Compatibility analysis considers how multiple licenses interact in the planned use and delivery.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-19",
+    "topic": "Licensing",
+    "prompt": "Why include license checks in continuous integration?",
+    "choices": [
+      "To provide legal advice automatically",
+      "To hide dependency names",
+      "To catch new policy conflicts near the dependency change"
+    ],
+    "answer_index": 2,
+    "explanation": "Automated policy checks give early feedback, with human review for ambiguous cases.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-20",
+    "topic": "Licensing",
+    "prompt": "What should a license exception contain?",
+    "choices": [
+      "A permanent blank approval",
+      "Scope, rationale, approver, conditions, and review date",
+      "Only the package logo"
+    ],
+    "answer_index": 1,
+    "explanation": "Documented, time-bounded exceptions keep deviations accountable and reviewable.",
+    "vulnerability_id": "license-conflict"
+  },
+  {
+    "id": "q-license-21",
+    "topic": "Licensing",
+    "prompt": "Why retain compliance records for a released version?",
+    "choices": [
+      "To show what shipped and how obligations were handled",
+      "To speed up block rotation",
+      "To replace backups"
+    ],
+    "answer_index": 0,
+    "explanation": "Release-specific evidence supports notices, customer questions, audits, and later corrections.",
+    "vulnerability_id": "license-conflict"
+  }
+]
