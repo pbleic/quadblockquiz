@@ -12,6 +12,8 @@ Quadblockquiz is a browser-based educational tetrominoes game about software sup
 - `Quadblockquiz.Content` loads and validates extensible JSON definitions from `priv/content`.
 - `QuadblockquizWeb.GameLive` owns the browser timer and renders state. It contains no game rules.
 
+The interface uses readable laptop-scale typography and a height-aware desktop layout. On viewports 900 pixels tall or shorter, nonessential header copy is hidden and the board scales to keep the complete game shell on screen at 100% browser zoom. The `F` key requests browser fullscreen, with `Esc` returning to windowed mode.
+
 Random selection uses an explicit Erlang RNG state stored inside the game state. LiveView supplies a fresh cryptographic seed for every new or restarted game, while tests provide a fixed seed so transitions remain reproducible. The piece picker excludes the current preview piece from the next draw to prevent immediate duplicates. No database or user account is required for this initial anonymous-play release.
 
 ## Rules and terminology

@@ -220,7 +220,7 @@ defmodule QuadblockquizWeb.GameLive do
           <section class="keyboard-help">
             <span><kbd>←</kbd><kbd>→</kbd> move</span><span><kbd>↑</kbd> rotate</span>
             <span><kbd>↓</kbd> soft drop</span><span><kbd>Enter</kbd> hard drop</span>
-            <span><kbd>Space</kbd> topics</span>
+            <span><kbd>Space</kbd> topics</span><span><kbd>F</kbd> fullscreen</span>
           </section>
         </aside>
       </main>

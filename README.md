@@ -33,6 +33,7 @@ mix test
 - `←` and `→` move the falling QuadBlock.
 - `↑` rotates it; `↓` soft-drops it; `Enter` hard-drops it.
 - `Space` opens the topic screen. Gravity pauses there, but the game clock and incident deadlines keep running.
+- `F` toggles in-game browser fullscreen so the board can use the entire laptop display; `Esc` exits fullscreen.
 - Every new or restarted game receives a fresh random QuadBlock sequence, with immediate duplicate pieces excluded.
 - Clearing rows scores 100/300/500/800 points for one through four rows. Every elapsed second scores one point, and a correct answer scores 100.
 - Correct answers open a loot box containing **Row Blast**, **Slow Clock**, or **Hotfix**.

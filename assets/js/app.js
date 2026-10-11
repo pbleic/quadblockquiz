@@ -35,6 +35,20 @@ window.addEventListener("keydown", event => {
   if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Enter", " "].includes(event.key)) {
     event.preventDefault()
   }
+
+  const target = event.target
+  const isEditing = target instanceof HTMLElement &&
+    (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName))
+
+  if (!isEditing && !event.ctrlKey && !event.metaKey && !event.altKey && event.key.toLowerCase() === "f") {
+    event.preventDefault()
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {})
+    } else {
+      document.documentElement.requestFullscreen({navigationUI: "hide"}).catch(() => {})
+    }
+  }
 }, {passive: false})
 
 // Show progress bar on live navigation and form submits
