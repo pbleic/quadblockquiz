@@ -14,6 +14,8 @@ Quadblockquiz is a browser-based educational tetrominoes game about software sup
 
 The interface uses readable laptop-scale typography and a height-aware desktop layout. On viewports 900 pixels tall or shorter, nonessential header copy is hidden and the board scales to keep the complete game shell on screen at 100% browser zoom. The `F` key requests browser fullscreen, with `Esc` returning to windowed mode.
 
+`bin/start` is the supported local launcher. It prefers the known-compatible Elixir 1.20/OTP 27 installation when available and isolates Mix, Hex, Rebar, dependencies, and build products beneath the repository's ignored `.local` directory. This prevents global-tool and stale-build mismatches from affecting startup.
+
 Random selection uses an explicit Erlang RNG state stored inside the game state. LiveView supplies a fresh cryptographic seed for every new or restarted game, while tests provide a fixed seed so transitions remain reproducible. The piece picker excludes the current preview piece from the next draw to prevent immediate duplicates. No database or user account is required for this initial anonymous-play release.
 
 ## Rules and terminology

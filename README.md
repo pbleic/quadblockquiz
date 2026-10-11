@@ -11,21 +11,23 @@ Requirements:
 - Elixir 1.16 or newer with Erlang/OTP
 - Internet access the first time Hex dependencies are downloaded
 
+Recommended one-command startup:
+
 ```bash
 git clone https://github.com/pbleic/quadblockquiz.git
 cd quadblockquiz
-mix deps.get
-mix phx.server
+./bin/start
 ```
+
+The launcher uses the compatible Elixir 1.20/OTP 27 installation when present and keeps Hex, Rebar, dependencies, and compiled files under `.local/`. This isolates the game from stale global `~/.mix/rebar3` files and other projects. The first run downloads and compiles dependencies; later starts reuse the project-local cache.
 
 Open [http://localhost:4000](http://localhost:4000). No database setup is needed.
 
 For development setup and verification:
 
 ```bash
-mix setup
-mix format --check-formatted
-mix test
+./bin/start format --check-formatted
+./bin/start test
 ```
 
 ## How to play

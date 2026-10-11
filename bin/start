@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+project_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+preferred_elixir="$HOME/.elixir-install/installs/elixir/1.20.4-otp-27/bin"
+
+# Prefer the known-compatible installation when it exists. This prevents a new
+# terminal from silently selecting an older system Elixir or an OTP-28 build.
+if [[ -x "$preferred_elixir/elixir" ]]; then
+  export PATH="$preferred_elixir:/usr/bin:/bin:$PATH"
+fi
+
+if ! command -v elixir >/dev/null 2>&1 || ! command -v mix >/dev/null 2>&1; then
+  echo "Quadblockquiz needs Elixir 1.16 or newer." >&2
+  exit 1
+fi
+
+if ! elixir -e 'unless Version.match?(System.version(), ">= 1.16.0"), do: System.halt(1)' >/dev/null 2>&1; then
+  echo "The selected Elixir cannot run with the selected Erlang, or is older than 1.16." >&2
+  echo "Expected installation: $preferred_elixir" >&2
+  exit 1
+fi
+
+# Keep all downloaded tooling and compiled dependencies inside this project.
+# In particular, never reuse ~/.mix/rebar3, which may belong to another OTP.
+export MIX_HOME="$project_dir/.local/mix"
+export HEX_HOME="$project_dir/.local/hex"
+export MIX_DEPS_PATH="$project_dir/.local/deps"
+export MIX_BUILD_PATH="$project_dir/.local/build"
+
+mkdir -p "$MIX_HOME" "$HEX_HOME" "$MIX_DEPS_PATH" "$MIX_BUILD_PATH"
+cd "$project_dir"
+
+if ! ls "$MIX_HOME"/archives/hex-* >/dev/null 2>&1; then
+  echo "Installing project-local Hex..."
+  mix local.hex --force
+fi
+
+rebar_path="$(find "$MIX_HOME" -type f -name rebar3 -print -quit 2>/dev/null || true)"
+
+if [[ -z "$rebar_path" ]]; then
+  echo "Installing project-local Rebar..."
+  mix local.rebar --force
+fi
+
+mix deps.get
+
+if [[ $# -gt 0 ]]; then
+  exec mix "$@"
+else
+  exec mix phx.server
+fi
