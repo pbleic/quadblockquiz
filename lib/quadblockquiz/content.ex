@@ -1,7 +1,7 @@
 defmodule Quadblockquiz.Content do
   @moduledoc "Loads and validates original quiz and vulnerability content from JSON."
 
-  @known_penalties ~w(garbage_rows speed_up rotate_lock score_drain)
+  @known_penalties ~w(garbage_rows speed_up score_drain)
 
   def load! do
     %{

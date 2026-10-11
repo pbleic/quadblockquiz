@@ -35,6 +35,21 @@ defmodule Quadblockquiz.GameTest do
     assert dropped.score > game.score
   end
 
+  test "rotation uses an upward floor kick instead of stopping near the bottom" do
+    game = %{new_game() | piece: Quadblockquiz.Game.Piece.new(:tee, 3, 18)}
+    rotated = Game.rotate(game)
+
+    assert rotated.piece.rotation == 1
+    assert rotated.piece.y == 17
+  end
+
+  test "a breached vulnerability never disables rotation" do
+    event = %{definition: @event, remaining_ms: 0, breached: true}
+    game = %{new_game() | piece: Quadblockquiz.Game.Piece.new(:tee), active_event: event}
+
+    assert Game.rotate(game).piece.rotation == 1
+  end
+
   test "topic screen pauses gravity but not clock scoring or incidents" do
     game = new_game() |> Game.toggle_topics()
     original_y = game.piece.y

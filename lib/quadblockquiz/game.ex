@@ -54,18 +54,14 @@ defmodule Quadblockquiz.Game do
   def move(game, _direction), do: game
 
   def rotate(%__MODULE__{status: :running} = game) do
-    if rotate_locked?(game) do
-      %{game | last_message: "Rotation is locked until the active incident is fixed."}
-    else
-      rotated = Piece.rotate(game.piece)
+    rotated = Piece.rotate(game.piece)
 
-      [-1, 0, 1]
-      |> Enum.map(&Piece.move(rotated, &1, 0))
-      |> Enum.find(&Board.placeable?(game.board, &1))
-      |> case do
-        nil -> game
-        candidate -> %{game | piece: candidate}
-      end
+    rotation_kicks()
+    |> Enum.map(fn {dx, dy} -> Piece.move(rotated, dx, dy) end)
+    |> Enum.find(&Board.placeable?(game.board, &1))
+    |> case do
+      nil -> game
+      candidate -> %{game | piece: candidate}
     end
   end
 
@@ -321,9 +317,6 @@ defmodule Quadblockquiz.Game do
   defp apply_penalty(game, "speed_up"),
     do: %{game | last_message: "Unpatched dependencies accelerated the QuadBlocks."}
 
-  defp apply_penalty(game, "rotate_lock"),
-    do: %{game | last_message: "The attack locked rotation until it is resolved."}
-
   defp apply_powerup(game, :row_blast),
     do: %{
       game
@@ -349,10 +342,10 @@ defmodule Quadblockquiz.Game do
   defp usable?(%__MODULE__{active_event: nil}, :hotfix), do: false
   defp usable?(_game, _item), do: true
 
-  defp rotate_locked?(%__MODULE__{active_event: event}) when not is_nil(event),
-    do: event.breached && event.definition["penalty"] == "rotate_lock"
-
-  defp rotate_locked?(_game), do: false
+  # A compact wall/floor-kick table. Horizontal kicks keep turns working beside
+  # walls and stacked cells; upward kicks allow legal turns near the floor.
+  defp rotation_kicks,
+    do: [{0, 0}, {-1, 0}, {1, 0}, {-2, 0}, {2, 0}, {0, -1}, {-1, -1}, {1, -1}, {0, -2}]
 
   defp related_to_active?(_question, nil), do: false
 

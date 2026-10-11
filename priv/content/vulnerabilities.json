@@ -14,7 +14,7 @@
     "title": "Cross-Site Scripting",
     "summary": "Browser-bound content may execute attacker-controlled script.",
     "education": "Encode output for its HTML context and apply a restrictive content security policy.",
-    "penalty": "rotate_lock",
+    "penalty": "garbage_rows",
     "deadline_seconds": 20
   },
   {

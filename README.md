@@ -35,7 +35,7 @@ mix test
 - `Space` opens the topic screen. Gravity pauses there, but the game clock and incident deadlines keep running.
 - Clearing rows scores 100/300/500/800 points for one through four rows. Every elapsed second scores one point, and a correct answer scores 100.
 - Correct answers open a loot box containing **Row Blast**, **Slow Clock**, or **Hotfix**.
-- A related correct answer or a Hotfix resolves the active cyberattack or licensing lawsuit. If its deadline expires, the event adds risk rows, accelerates falling, locks rotation, or drains score.
+- A related correct answer or a Hotfix resolves the active cyberattack or licensing lawsuit. If its deadline expires, the event adds risk rows, accelerates falling, or drains score. Core movement and rotation controls always remain available when the piece has room.
 - The run ends when the stack blocks a new QuadBlock, you quit from the topic screen, or ten minutes expire.
 
 Alternating between block play and questions is the intended strategy: quizzes fund the powerups that make later incidents and faster levels manageable.

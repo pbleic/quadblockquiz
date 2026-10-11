@@ -118,7 +118,13 @@ defmodule QuadblockquizWeb.GameLive do
           </div>
 
           <div class="board-wrap">
-            <div class="board" role="grid">
+            <div
+              class="board"
+              role="grid"
+              data-piece-x={@game.piece.x}
+              data-piece-y={@game.piece.y}
+              data-piece-rotation={@game.piece.rotation}
+            >
               <%= for cell <- board_cells(@game) do %>
                 <div class={cell_class(cell.kind)} role="gridcell" aria-label={if cell.kind, do: Atom.to_string(cell.kind), else: "empty"}></div>
               <% end %>
